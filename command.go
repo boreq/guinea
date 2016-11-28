@@ -1,4 +1,4 @@
-package cli
+package guinea
 
 import (
 	"errors"
@@ -77,10 +77,17 @@ func (c Command) PrintHelp(cmdName string) {
 // and should usually be set to one of the return values of FindCommand. The
 // array of the arguments provided for this subcommand is used to generate the
 // context and should be set to one of the return values of FindCommand as
-// well.
+// well. The command will not be executed with an insufficient number of
+// arguments so there is no need to check that in the run function.
 func (c Command) Execute(cmdName string, cmdArgs []string) error {
 	context, err := makeContext(c, cmdArgs)
 	if err != nil {
+		c.PrintHelp(cmdName)
+		return err
+	}
+
+	// Is the number of arguments sufficient?
+	if err := c.validateArgs(context.Arguments); err != nil {
 		c.PrintHelp(cmdName)
 		return err
 	}
@@ -102,4 +109,11 @@ func (c Command) Execute(cmdName string, cmdArgs []string) error {
 		c.PrintHelp(cmdName)
 	}
 	return e
+}
+
+func (c Command) validateArgs(cmdArgs []string) error {
+	if len(cmdArgs) < len(c.Arguments) {
+		return ErrInvalidParms
+	}
+	return nil
 }

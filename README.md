@@ -1,6 +1,8 @@
 # guinea
 Guinea is a command line interface library.
 
+https://godoc.org/github.com/boreq/guinea
+
 ## Description
 Programs very often organise the user interface in the form of subcommands. As
 an example the `go` command lets the user invoke multiple subcommands such as

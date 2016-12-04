@@ -14,9 +14,9 @@ var globalOpt = []Option{
 	},
 }
 
-// Run is the most high level function of the library and special behaviour to
-// the commands, namely displaying help to the user. If you wish to use the
-// library without that feature use the FindCommand method directly.
+// Run is a high level function which adds special behaviour to the commands,
+// namely displaying help to the user. If you wish to use the library without
+// that feature use the FindCommand function directly.
 func Run(rootCommand *Command) error {
 	cmd, cmdName, cmdArgs := FindCommand(rootCommand, os.Args)
 	cmd.Options = append(cmd.Options, globalOpt...)

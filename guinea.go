@@ -1,8 +1,27 @@
 package guinea
 
 import (
+	"os"
 	"strings"
 )
+
+var globalOpt = []Option{
+	Option{
+		Name:        "help",
+		Type:        Bool,
+		Default:     false,
+		Description: "Display help",
+	},
+}
+
+// Run is the most high level function of the library and special behaviour to
+// the commands, namely displaying help to the user. If you wish to use the
+// library without that feature use the FindCommand method directly.
+func Run(rootCommand *Command) error {
+	cmd, cmdName, cmdArgs := FindCommand(rootCommand, os.Args)
+	cmd.Options = append(cmd.Options, globalOpt...)
+	return cmd.Execute(cmdName, cmdArgs)
+}
 
 // FindCommand attempts to recursively locate the command which should be
 // executed. The provided command should be the root command of the program

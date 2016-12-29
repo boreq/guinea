@@ -22,7 +22,13 @@ type Command struct {
 	Description      string
 }
 
+// PrintHelp prints the return value of Help to the standard output.
+func (c Command) PrintHelp(cmdName string) {
+	fmt.Printf(c.Help(cmdName))
+}
+
 // UsageString returns a short string containing the syntax of this command.
+// Command name should be set to one of the return values of FindCommand.
 func (c Command) UsageString(cmdName string) string {
 	rw := cmdName
 	if len(c.Subcommands) > 0 {
@@ -35,42 +41,47 @@ func (c Command) UsageString(cmdName string) string {
 	return rw
 }
 
-// PrintHelp prints the full help text to the standard output. The text
-// contains the syntax of the command, a description, a list of accepted
-// options and arguments and available subcommands.
-func (c Command) PrintHelp(cmdName string) {
+// Help returns the full help text for this command  The text contains the
+// syntax of the command, a description, a list of accepted options and
+// arguments and available subcommands. Command name should be set to one of
+// the return values of FindCommand.
+func (c Command) Help(cmdName string) string {
+	var rv string
+
 	usage := c.UsageString(cmdName)
-	fmt.Printf("\n    %s - %s\n", usage, c.ShortDescription)
+	rv += fmt.Sprintf("\n    %s - %s\n", usage, c.ShortDescription)
 
 	if len(c.Options) > 0 {
-		fmt.Println("\nOPTIONS:")
+		rv += fmt.Sprintln("\nOPTIONS:")
 		for _, opt := range c.Options {
-			fmt.Printf("    %-20s %s\n", opt, opt.Description)
+			rv += fmt.Sprintf("    %-20s %s\n", opt, opt.Description)
 		}
 	}
 
 	if len(c.Arguments) > 0 {
-		fmt.Println("\nARGUMENTS:")
+		rv += fmt.Sprintln("\nARGUMENTS:")
 		for _, arg := range c.Arguments {
-			fmt.Printf("    %-20s %s\n", arg, arg.Description)
+			rv += fmt.Sprintf("    %-20s %s\n", arg, arg.Description)
 		}
 	}
 
 	if len(c.Subcommands) > 0 {
-		fmt.Println("\nSUBCOMMANDS:")
+		rv += fmt.Sprintln("\nSUBCOMMANDS:")
 		for name, subCmd := range c.Subcommands {
-			fmt.Printf("    %-20s %s\n", name, subCmd.ShortDescription)
+			rv += fmt.Sprintf("    %-20s %s\n", name, subCmd.ShortDescription)
 		}
-		fmt.Printf("\n    Try '%s <subcommand> --help'\n", cmdName)
+		rv += fmt.Sprintf("\n    Try '%s <subcommand> --help'\n", cmdName)
 	}
 
 	if len(c.Description) > 0 {
-		fmt.Println("\nDESCRIPTION:")
+		rv += fmt.Sprintln("\nDESCRIPTION:")
 		desc := strings.Trim(c.Description, "\n")
 		for _, line := range strings.Split(desc, "\n") {
-			fmt.Printf("    %s\n", line)
+			rv += fmt.Sprintf("    %s\n", line)
 		}
 	}
+
+	return rv
 }
 
 // Execute runs the command. Command name is used to generate the help texts

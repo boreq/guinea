@@ -22,6 +22,11 @@ func (v OptionValue) Int() int {
 	return *v.Value.(*int)
 }
 
+// Str casts a value to a string and panicks on failure.
+func (v OptionValue) Str() string {
+	return *v.Value.(*string)
+}
+
 // Context holds the options and arguments provided by the user.
 type Context struct {
 	Options   map[string]OptionValue

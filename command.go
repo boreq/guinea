@@ -97,16 +97,16 @@ func (c Command) Execute(cmdName string, cmdArgs []string) error {
 		return err
 	}
 
-	// Is the number of arguments sufficient?
-	if err := c.validateArgs(context.Arguments); err != nil {
-		c.PrintHelp(cmdName)
-		return err
-	}
-
 	// Is there a help flag and is it set?
 	if help, ok := context.Options["help"]; ok && help.Bool() {
 		c.PrintHelp(cmdName)
 		return nil
+	}
+
+	// Is the number of arguments sufficient?
+	if err := c.validateArgs(context.Arguments); err != nil {
+		c.PrintHelp(cmdName)
+		return err
 	}
 
 	// Is this command only used to hold subcommands?

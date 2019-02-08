@@ -1,4 +1,4 @@
-# guinea
+# guinea [![Build Status](https://travis-ci.org/boreq/guinea.svg?branch=master)](https://travis-ci.org/boreq/guinea)
 Guinea is a command line interface library.
 
 https://godoc.org/github.com/boreq/guinea

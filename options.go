@@ -34,6 +34,7 @@ func (opt Option) String() string {
 type Argument struct {
 	Name        string
 	Multiple    bool
+	Optional    bool
 	Description string
 }
 
@@ -43,7 +44,10 @@ type Argument struct {
 func (arg Argument) String() string {
 	format := "<%s>"
 	if arg.Multiple {
-		format += "..."
+		format = fmt.Sprintf("%s...", format)
+	}
+	if arg.Optional {
+		format = fmt.Sprintf("[%s]", format)
 	}
 	return fmt.Sprintf(format, arg.Name)
 }

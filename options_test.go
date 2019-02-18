@@ -31,3 +31,17 @@ func TestArgumentMultipleName(t *testing.T) {
 		t.Fatal("Invalid:", arg.String())
 	}
 }
+
+func TestArgumentOptionalName(t *testing.T) {
+	arg := Argument{Name: "argument", Multiple: false, Optional: true}
+	if arg.String() != "[<argument>]" {
+		t.Fatal("Invalid:", arg.String())
+	}
+}
+
+func TestArgumentMultipleOptionalName(t *testing.T) {
+	arg := Argument{Name: "argument", Multiple: true, Optional: true}
+	if arg.String() != "[<argument>...]" {
+		t.Fatal("Invalid:", arg.String())
+	}
+}

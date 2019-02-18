@@ -123,8 +123,37 @@ func (c Command) Execute(cmdName string, cmdArgs []string) error {
 }
 
 func (c Command) validateArgs(cmdArgs []string) error {
-	if len(cmdArgs) < len(c.Arguments) {
+	if len(cmdArgs) < c.minNumberOfArguments() {
 		return ErrInvalidParms
 	}
+	max, err := c.maxNumberOfArguments()
+	if err == nil && len(cmdArgs) > max {
+		return ErrInvalidParms
+
+	}
 	return nil
+}
+
+// minNumberOfArguments returns the min number of arguments that can be passed
+// to this command. This is equal to the number of required arguments.
+func (c Command) minNumberOfArguments() int {
+	sum := 0
+	for _, argument := range c.Arguments {
+		if !argument.Optional {
+			sum++
+		}
+	}
+	return sum
+}
+
+// maxNumberOfArguments returns the max number of arguments that can be passed
+// to this command or error to indicate that the number is unlimited (if there
+// are arguments marked as "multiple" defined for this method).
+func (c Command) maxNumberOfArguments() (int, error) {
+	for _, argument := range c.Arguments {
+		if argument.Multiple {
+			return 0, errors.New("unlimited number of arguments")
+		}
+	}
+	return len(c.Arguments), nil
 }

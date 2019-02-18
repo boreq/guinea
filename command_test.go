@@ -14,7 +14,7 @@ func supressStdout() func() {
 	}
 }
 
-func TestCommandWrongArguments(t *testing.T) {
+func TestCommandTooFewArguments(t *testing.T) {
 	var mainCmd = Command{
 		Arguments: []Argument{
 			{Name: "arg1"},
@@ -27,6 +27,54 @@ func TestCommandWrongArguments(t *testing.T) {
 
 	if mainCmd.Execute("program", []string{"a"}) != ErrInvalidParms {
 		t.Fatal("Execute did not return ErrInvalidParams")
+	}
+}
+
+func TestCommandTooManyArguments(t *testing.T) {
+	var mainCmd = Command{
+		Arguments: []Argument{
+			{Name: "arg1"},
+			{Name: "arg2"},
+		},
+	}
+
+	restoreStdout := supressStdout()
+	defer restoreStdout()
+
+	if mainCmd.Execute("program", []string{"a", "b", "c"}) != ErrInvalidParms {
+		t.Fatal("Execute did not return ErrInvalidParams")
+	}
+}
+
+func TestCommandOptionalArguments(t *testing.T) {
+	var mainCmd = Command{
+		Arguments: []Argument{
+			{Name: "arg1"},
+			{Name: "arg2", Optional: true},
+		},
+	}
+
+	restoreStdout := supressStdout()
+	defer restoreStdout()
+
+	if err := mainCmd.Execute("program", []string{"a"}); err != nil {
+		t.Fatalf("Execute did returned %s", err)
+	}
+}
+
+func TestCommandMultipleArguments(t *testing.T) {
+	var mainCmd = Command{
+		Arguments: []Argument{
+			{Name: "arg1"},
+			{Name: "arg2", Multiple: true},
+		},
+	}
+
+	restoreStdout := supressStdout()
+	defer restoreStdout()
+
+	if err := mainCmd.Execute("program", []string{"a", "b", "c"}); err != nil {
+		t.Fatalf("Execute did returned %s", err)
 	}
 }
 

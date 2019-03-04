@@ -12,17 +12,17 @@ type OptionValue struct {
 	Value interface{}
 }
 
-// Bool casts a value to a bool and panicks on failure.
+// Bool casts a value to a bool and panics on failure.
 func (v OptionValue) Bool() bool {
 	return *v.Value.(*bool)
 }
 
-// Int casts a value to an int and panicks on failure.
+// Int casts a value to an int and panics on failure.
 func (v OptionValue) Int() int {
 	return *v.Value.(*int)
 }
 
-// Str casts a value to a string and panicks on failure.
+// Str casts a value to a string and panics on failure.
 func (v OptionValue) Str() string {
 	return *v.Value.(*string)
 }

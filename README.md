@@ -1,7 +1,6 @@
-# guinea [![Build Status](https://travis-ci.org/boreq/guinea.svg?branch=master)](https://travis-ci.org/boreq/guinea)
-Guinea is a command line interface library.
+# guinea [![Build Status](https://travis-ci.org/boreq/guinea.svg?branch=master)](https://travis-ci.org/boreq/guinea) [![GoDoc](https://godoc.org/github.com/boreq/guinea?status.svg)](https://godoc.org/github.com/boreq/guinea)
 
-https://godoc.org/github.com/boreq/guinea
+Guinea is a command line interface library.
 
 ## Description
 Programs very often organise the user interface in the form of subcommands. As

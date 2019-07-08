@@ -65,9 +65,8 @@ func makeContext(c Command, args []string) (*Context, error) {
 			}
 		}
 	}
-	e := flagset.Parse(args)
-	if e != nil {
-		return nil, e
+	if err := flagset.Parse(args); err != nil {
+		return nil, err
 	}
 	context.Arguments = flagset.Args()
 	return context, nil

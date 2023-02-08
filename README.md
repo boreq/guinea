@@ -1,4 +1,4 @@
-# guinea [![Build Status](https://travis-ci.org/boreq/guinea.svg?branch=master)](https://travis-ci.org/boreq/guinea) [![GoDoc](https://godoc.org/github.com/boreq/guinea?status.svg)](https://godoc.org/github.com/boreq/guinea)
+# guinea [![CI](https://github.com/boreq/guinea/actions/workflows/ci.yml/badge.svg)](https://github.com/boreq/guinea/actions/workflows/ci.yml) [![Go Reference](https://pkg.go.dev/badge/github.com/boreq/guinea.svg)](https://pkg.go.dev/github.com/boreq/guinea)
 
 Guinea is a command line interface library.
 

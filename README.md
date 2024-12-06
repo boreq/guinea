@@ -83,6 +83,7 @@ two subcommands.
     func main() {
     	if err := guinea.Run(&rootCommand); err != nil {
     		fmt.Fprintln(os.Stderr, err)
+    		os.Exit(1)
     	}
     }
 
